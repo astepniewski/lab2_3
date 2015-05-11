@@ -42,4 +42,15 @@ public class SimilarityFinderTest {
 				is(expected));
 	}
 
+	@Test
+	public void calculateJackardSimilarity_sameManyElementSequences_shouldReturn1() {
+
+		final int[] seq = new int[] { 1, 10, 20, 50, 100 };
+		final double expected = 1.0;
+
+		assertThat(similarityFinder.calculateJackardSimilarity(seq, seq),
+				is(expected));
+
+	}
+
 }
