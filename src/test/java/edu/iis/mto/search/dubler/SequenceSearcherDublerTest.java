@@ -25,9 +25,23 @@ public class SequenceSearcherDublerTest {
 		final int[] seq = new int[] { 1, 10, 20, 50, 100 };
 		final int key = 25;
 		final boolean expected = false;
-		
+
 		SequenceSearcherDubler sequenceSearcher = new SequenceSearcherDubler();
 
 		assertThat(sequenceSearcher.search(key, seq).isFound(), is(expected));
+	}
+
+	@Test
+	public void search_SequenceHasZeroElements_shouldReturnFalse() {
+
+		final int[] seq = new int[] {};
+		final int key = 0;
+		final boolean expected = false;
+
+		SequenceSearcherDubler sequenceSearcher = new SequenceSearcherDubler();
+
+		assertThat(sequenceSearcher.search(key, seq).isFound(),
+				is(expected));
+
 	}
 }
