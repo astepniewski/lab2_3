@@ -3,6 +3,11 @@ package edu.iis.mto.similarity;
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.number.IsCloseTo.*;
+import static org.mockito.Matchers.anyInt;
+import static org.mockito.Mockito.*;
+
+import org.mockito.Matchers;
+import edu.iis.mto.search.dubler.SearchResultDubler;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -87,8 +92,25 @@ public class SimilarityFinderTest {
 		final double expected = 0.67;
 		final double error = 0.1;
 
-		assertThat(similarityFinder.calculateJackardSimilarity(seq1,
-				seq2), closeTo(expected, error));
+		assertThat(similarityFinder.calculateJackardSimilarity(seq1, seq2),
+				closeTo(expected, error));
 	}
 
+	@Test
+	public void sequenceSearcherDubler_shouldBeCalledSeqLengthTimes() {
+
+		SequenceSearcherDubler sequenceSearcher = mock(SequenceSearcherDubler.class);
+		SimilarityFinder similarityFinder = new SimilarityFinder(
+				sequenceSearcher);
+		final int[] seq = new int[] { 1, 10, 20, 50, 100 };
+		final int expected = seq.length;
+		when(sequenceSearcher.search(anyInt(), Matchers.<int[]> any()))
+				.thenReturn(new SearchResultDubler(0, true));
+
+		similarityFinder.calculateJackardSimilarity(seq, seq);
+
+		verify(sequenceSearcher, times(expected)).search(anyInt(),
+				Matchers.<int[]> any());
+
+	}
 }
