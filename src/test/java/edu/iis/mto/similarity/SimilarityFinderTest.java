@@ -64,5 +64,18 @@ public class SimilarityFinderTest {
 		assertThat(similarityFinder.calculateJackardSimilarity(seq1, seq2),
 				is(expected));
 	}
+	
+	@Test
+	public void calculateJackardSimilarity_manyElementsAndZeroLengthSequences_shouldReturn0() {
+
+		final int[] seq1 = new int[] { 1, 10, 20, 50, 100 };
+		final int[] seq2 = new int[0];
+
+		final double expected = 0.0;
+
+		assertThat(similarityFinder.calculateJackardSimilarity(seq1, seq2),
+				is(expected));
+
+	}
 
 }
