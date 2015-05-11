@@ -2,7 +2,7 @@ package edu.iis.mto.similarity;
 
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.is;
-
+import static org.hamcrest.number.IsCloseTo.*;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -64,7 +64,7 @@ public class SimilarityFinderTest {
 		assertThat(similarityFinder.calculateJackardSimilarity(seq1, seq2),
 				is(expected));
 	}
-	
+
 	@Test
 	public void calculateJackardSimilarity_manyElementsAndZeroLengthSequences_shouldReturn0() {
 
@@ -76,6 +76,19 @@ public class SimilarityFinderTest {
 		assertThat(similarityFinder.calculateJackardSimilarity(seq1, seq2),
 				is(expected));
 
+	}
+
+	@Test
+	public void calculateJackardSimilarity_manyElements_oneDifferentElement_shouldReturnAlmost067() {
+
+		final int[] seq1 = new int[] { 1, 10, 20, 50, 100 };
+		final int[] seq2 = new int[] { 1, 10, 20, 50, 101 };
+
+		final double expected = 0.67;
+		final double error = 0.1;
+
+		assertThat(similarityFinder.calculateJackardSimilarity(seq1,
+				seq2), closeTo(expected, error));
 	}
 
 }
