@@ -10,7 +10,7 @@ public class SequenceSearcherDubler implements SequenceSearcher {
 
 		int i = 0;
 		for (i = 0; i < seq.length; i++) {
-			if (i == key) {
+			if (seq[i] == key) {
 				found = true;
 				break;
 			}
